@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+option go_package = "github.com/Benzogang-Tape/audio-hosting/users/api/protogen;protogen";
+
+package users_api;
+
+import "api/clients/users/types.proto";
+import "api/google/api/annotations.proto";
+
+service UsersService {
+  // auth related things
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/users/login"
+      body : "*"
+    };
+  };
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/users/register"
+      body : "*"
+    };
+  };
+  rpc Refresh(RefreshRequest) returns (RefreshResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/users/refresh"
+      body : "*"
+    };
+  };
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/users/logout"
+      body : "*"
+    };
+  };
+
+  // one user related things
+  rpc GetMe(GetMeRequest) returns (GetMeResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/users/me"
+    };
+  };
+  rpc UpdateMe(UpdateMeRequest) returns (UpdateMeResponse) {
+    option (google.api.http) = {
+      put : "/api/v1/users/me"
+      body : "*"
+    };
+  };
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {
+    option (google.api.http) = {
+      put : "/api/v1/users/password"
+      body : "*"
+    };
+  };
+
+  rpc Follow(FollowRequest) returns (FollowResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/users/{user_id}/follow"
+    };
+  };
+  rpc Unfollow(UnfollowRequest) returns (UnfollowResponse) {
+    option (google.api.http) = {
+      delete : "/api/v1/users/{user_id}/unfollow"
+    };
+  };
+  rpc GetFollowers(GetFollowersRequest) returns (GetFollowersResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/users/{user_id}/followers"
+    };
+  };
+  rpc GetFollowed(GetFollowedRequest) returns (GetFollowedResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/users/{user_id}/followed"
+    };
+  };
+
+  // artist related things
+  rpc GetArtists(GetArtistsRequest) returns (GetArtistsResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/artists"
+    };
+  };
+  rpc GetArtist(GetArtistRequest) returns (GetArtistResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/artists/{id}"
+    };
+  };
+  rpc MakeArtist(MakeArtistRequest) returns (MakeArtistResponse) {
+    option (google.api.http) = {
+      post : "/api/v1/artists/{id}"
+      body : "*"
+    };
+  };
+  rpc UpdateArtist(UpdateArtistRequest) returns (UpdateArtistResponse) {
+    option (google.api.http) = {
+      put : "/api/v1/artists/{id}"
+      body : "*"
+    };
+  };
+  rpc DeleteArtist(DeleteArtistRequest) returns (DeleteArtistResponse) {
+    option (google.api.http) = {
+      delete : "/api/v1/artists/{id}"
+    };
+  };
+
+  // listener related things
+  rpc GetListeners(GetListenersRequest) returns (GetListenersResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/listeners"
+    };
+  };
+  rpc GetListener(GetListenerRequest) returns (GetListenerResponse) {
+    option (google.api.http) = {
+      get : "/api/v1/listeners/{id}"
+    };
+  };
+  rpc UpdateListener(UpdateListenerRequest) returns (UpdateListenerResponse) {
+    option (google.api.http) = {
+      put : "/api/v1/listeners/{id}"
+      body : "*"
+    };
+  };
+  rpc DeleteListener(DeleteListenerRequest) returns (DeleteListenerResponse) {
+    option (google.api.http) = {
+      delete : "/api/v1/listeners/{id}"
+    };
+  };
+}

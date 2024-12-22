@@ -1,0 +1,191 @@
+syntax = "proto3";
+
+option go_package = "github.com/Benzogang-Tape/audio-hosting/users/api/protogen;protogen";
+
+package users_api;
+
+message Tokens {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse { Tokens tokens = 1; }
+
+message RegisterRequest {
+  string email = 1;
+  string name = 2;
+  string password = 3;
+  string password_repeat = 4;
+}
+
+message RegisterResponse { Tokens tokens = 1; }
+
+message RefreshRequest { string refresh_token = 1; }
+
+message RefreshResponse { Tokens tokens = 1; }
+
+message LogoutRequest { string refresh_token = 1; }
+
+message LogoutResponse {}
+
+message PaginationRequest {
+  int64 offset = 1;
+  int64 limit = 2;
+}
+
+message PaginationResponse {
+  int64 total = 1;
+  bool has_next = 2;
+  int64 last_page = 3;
+}
+
+message Filter {
+  string field = 1;
+  string operator = 2;
+  string value = 3;
+}
+
+message Sort {
+  string field = 1;
+  string order = 2;
+}
+
+message FullUser {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string avatar_url = 4;
+}
+
+message Artist {
+  string id = 1;
+  string name = 2;
+  string label = 3;
+  string avatar_url = 4;
+}
+
+message Listener {
+  string id = 1;
+  string name = 2;
+  repeated Artist followed_artists = 3;
+  string avatar_url = 4;
+}
+
+message GetMeRequest {}
+
+message GetMeResponse {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string avatar_url = 4;
+}
+
+message UpdateMeRequest { optional string name = 1; }
+
+message UpdateMeResponse {}
+
+message ChangePasswordRequest {
+  string old_password = 1;
+  string new_password = 2;
+  string new_password_repeat = 3;
+}
+
+message ChangePasswordResponse {}
+
+message GetArtistsRequest {
+  optional PaginationRequest pagination = 1;
+  optional Filter filter = 2;
+  optional Sort sort = 3;
+}
+
+message GetArtistsResponse {
+  repeated Artist artists = 1;
+  optional PaginationResponse pagination = 2;
+}
+
+message GetArtistRequest { string id = 1; }
+
+message GetArtistResponse { Artist artist = 1; }
+
+message MakeArtistRequest { string id = 1; }
+
+message MakeArtistResponse {}
+
+message UpdateArtistRequest {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string label = 4;
+  string avatar_url = 5;
+}
+
+message UpdateArtistResponse {}
+
+message DeleteArtistRequest { string id = 1; }
+
+message DeleteArtistResponse {}
+
+message GetListenersRequest {
+  optional PaginationRequest pagination = 1;
+  optional Filter filter = 2;
+  optional Sort sort = 3;
+}
+
+message GetListenersResponse {
+  repeated Listener users = 1;
+  optional PaginationResponse pagination = 2;
+}
+
+message GetListenerRequest { string id = 1; }
+
+message GetListenerResponse { Listener listener = 1; }
+
+message UpdateListenerRequest {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string avatar_url = 4;
+}
+
+message UpdateListenerResponse {}
+
+message DeleteListenerRequest { string id = 1; }
+
+message DeleteListenerResponse {}
+
+message FollowRequest { string user_id = 1; }
+
+message FollowResponse {}
+
+message UnfollowRequest { string user_id = 1; }
+
+message UnfollowResponse {}
+
+message GetFollowersRequest {
+  string user_id = 1;
+  optional PaginationRequest pagination = 2;
+  optional Filter filter = 3;
+  optional Sort sort = 4;
+}
+
+message GetFollowersResponse {
+  repeated Listener users = 1;
+  optional PaginationResponse pagination = 2;
+}
+
+message GetFollowedRequest {
+  string user_id = 1;
+  optional PaginationRequest pagination = 2;
+  optional Filter filter = 3;
+  optional Sort sort = 4;
+}
+
+message GetFollowedResponse {
+  repeated Artist users = 1;
+  optional PaginationResponse pagination = 2;
+}

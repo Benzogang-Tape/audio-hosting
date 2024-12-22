@@ -1,0 +1,1 @@
+ALTER TABLE feats DROP COLUMN order_num;

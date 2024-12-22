@@ -1,0 +1,2 @@
+ALTER TABLE songs ALTER COLUMN s3_object_name DROP NOT NULL;
+ALTER TABLE songs DROP COLUMN released;

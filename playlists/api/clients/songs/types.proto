@@ -1,0 +1,156 @@
+syntax = "proto3";
+
+option go_package = "github.com/Benzogang-Tape/audio-hosting/songs/api/protogen";
+
+package api;
+
+import "api/clients/users/types.proto";
+import "api/google/protobuf/duration.proto";
+import "api/google/protobuf/timestamp.proto";
+import "api/validate/validate.proto";
+
+enum SongFileExtension {
+  MP3 = 0;
+}
+
+message UploadRawSongRequest {
+  bytes file_part = 1 [(validate.rules).bytes = { min_len: 1, max_len: 1048576 }];// Max 1MB per part
+  SongFileExtension extension = 2;
+  string song_id = 3 [(validate.rules).string.uuid = true];
+}
+message UploadRawSongResponse {
+  // newly created raw_song_i
+  // looks like 902435aad48afe51260f23f8a73b38a3245cac25.extension
+  // 1st part is sha1 hex-encoded 40 bytes hash of "Artist\u0001SongName".
+  // 2nd part is one of the formats from SongFileExtension.
+  string id = 1;
+  // it's just https://HOST/songs/api/v1/song/raw/902435aad48afe51260f23f8a73b38a3245cac25.extension
+  string url = 2;
+}
+
+message GetRawSongRequest {
+  string raw_song_id = 1;
+}
+message GetRawSongResponse {
+  bytes file_part = 1;
+}
+
+enum ImageFileExtension {
+  JPEG = 0;
+  PNG = 1;
+  GIF = 2;
+}
+
+message UploadRawSongImageRequest {
+  bytes file_part = 1 [(validate.rules).bytes = { min_len: 1, max_len: 1048576 }];// Max 1MB per part
+  ImageFileExtension extension = 2;
+  string song_id = 3 [(validate.rules).string.uuid = true];
+}
+message UploadRawSongImageResponse {
+  // Similar to UploadRawSong
+  string id = 1;
+  string url = 2;
+}
+
+message GetRawSongImageRequest {
+  string raw_image_id = 1;
+}
+message GetRawSongImageResponse {
+  bytes file_part = 1;
+}
+
+message CreateSongRequest {
+  string name = 1 [(validate.rules).string = { min_len: 1, max_len: 256 }];
+  reserved 2, 3;
+  repeated string feat_artists_ids = 4 [(validate.rules).repeated = { min_items: 0, max_items: 16, items: {string: {uuid:true}} }];
+}
+message CreateSongResponse {
+  string id = 1;
+  users_api.Artist singer = 2;
+  string name = 3;
+  repeated users_api.Artist artists = 4;
+}
+
+message GetSongRequest {
+  string id = 1 [(validate.rules).string.uuid = true];
+}
+message GetSongResponse {
+  Song song = 1;
+}
+
+message UpdateSongRequest {
+  string id = 1 [(validate.rules).string.uuid = true];
+  reserved 2; // repeated string artists_ids = 2; // Likely not added
+  string name = 3 [(validate.rules).string = { min_len: 1, max_len: 256 }];
+  optional string image_url = 4 [(validate.rules).string.uri = true];
+}
+message UpdateSongResponse {}
+
+message DeleteSongsRequest {
+  repeated string ids = 1 [(validate.rules).repeated = { min_items: 1, max_items: 1000, items: { string: { uuid: true } } }];
+}
+message DeleteSongsResponse {
+
+}
+
+message Song {
+  string id = 1;
+  users_api.Artist singer = 9;
+  repeated users_api.Artist artists = 2;
+  string name = 3;
+  string song_url = 4;
+  optional string image_url = 5;
+  google.protobuf.Duration duration = 6;
+  int32 weight_bytes = 7;
+  optional google.protobuf.Timestamp released_at = 8;
+}
+
+message MySong {
+  string id = 1;
+  users_api.Artist singer = 9;
+  repeated users_api.Artist artists = 2;
+  string name = 3;
+  optional string song_url = 4;
+  optional string image_url = 5;
+  optional google.protobuf.Duration duration = 6;
+  optional int32 weight_bytes = 7;
+  optional google.protobuf.Timestamp released_at = 8;
+  google.protobuf.Timestamp uploaded_at = 10;
+}
+
+message PaginationResponse {
+  int32 last_page = 1;
+}
+
+message GetSongsRequest {
+  // Pagination queries
+  optional int32 page = 1 [(validate.rules).int32 = { gte: 1 }];
+  optional int32 page_size = 2 [(validate.rules).int32 = { gte: 1, lte: 1000 }];
+  // Filtering queries, mutually exclusive
+  optional string artist_id = 3 [(validate.rules).string.uuid = true];
+  optional string match_artist = 4;
+  optional string match_name = 5 [(validate.rules).string = { min_len: 1, max_len: 64 }];
+  repeated string ids = 6 [(validate.rules).repeated = { max_items: 1000 }];
+}
+message GetSongsResponse {
+  repeated Song songs = 1;
+  PaginationResponse pagination = 2;
+}
+
+message GetMySongsRequest {
+  // Pagination queries
+  optional int32 page = 1 [(validate.rules).int32 = { gte: 1 }];
+  optional int32 page_size = 2 [(validate.rules).int32 = { gte: 1, lte: 1000 }];
+}
+message GetMySongsResponse {
+  repeated MySong songs = 1;
+  PaginationResponse pagination = 2;
+}
+
+message ReleaseSongsRequest {
+  repeated string ids = 1 [(validate.rules).repeated = { min_items: 1, max_items: 1000, items: { string: { uuid: true } } }];
+  bool notify = 2;
+}
+message ReleaseSongsResponse {
+
+}

@@ -1,0 +1,1 @@
+ALTER TABLE songs RENAME COLUMN image_url TO s3_image_name;

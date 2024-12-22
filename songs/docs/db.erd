@@ -1,0 +1,637 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dineug/erd-editor/main/json-schema/schema.json",
+  "version": "3.0.0",
+  "settings": {
+    "width": 2000,
+    "height": 2000,
+    "scrollTop": -36,
+    "scrollLeft": 0,
+    "zoomLevel": 1,
+    "show": 495,
+    "database": 16,
+    "databaseName": "songs",
+    "canvasType": "ERD",
+    "language": 1,
+    "tableNameCase": 4,
+    "columnNameCase": 2,
+    "bracketType": 1,
+    "relationshipDataTypeSync": true,
+    "relationshipOptimization": false,
+    "columnOrder": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "maxWidthComment": -1,
+    "ignoreSaveSettings": 0
+  },
+  "doc": {
+    "tableIds": [
+      "2_imBH7ajFnjRPGI7jWkg",
+      "rKrFb1OaESSgZrC3O6efl"
+    ],
+    "relationshipIds": [],
+    "indexIds": [],
+    "memoIds": []
+  },
+  "collections": {
+    "tableEntities": {
+      "2_imBH7ajFnjRPGI7jWkg": {
+        "id": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "songs",
+        "comment": "s3 songs metadata",
+        "columnIds": [
+          "IA8xlUS-0ofQDBOU7VikQ",
+          "ijwRILgnLwO9A75bExceW",
+          "CZ6MFcaqz1qtqzJNFPtu0",
+          "-4qSM8dkH30cp9n1GsW93",
+          "FdmFWFdPjK8xa8h5S2sk_",
+          "3vmw01o4JQDN1sPl6Cncc",
+          "em7of1jO5Y7OeWlDXAx3V",
+          "cbS3ngmdV_B9vnkREvBzr",
+          "ypkT_6lOpyiEc9aKuJeuL"
+        ],
+        "seqColumnIds": [
+          "IA8xlUS-0ofQDBOU7VikQ",
+          "ijwRILgnLwO9A75bExceW",
+          "CZ6MFcaqz1qtqzJNFPtu0",
+          "-4qSM8dkH30cp9n1GsW93",
+          "FdmFWFdPjK8xa8h5S2sk_",
+          "3vmw01o4JQDN1sPl6Cncc",
+          "em7of1jO5Y7OeWlDXAx3V",
+          "sDDAZHCMoETZmtBfkCB-f",
+          "cbS3ngmdV_B9vnkREvBzr",
+          "yR0Gb0VJ7Nd4iQSJvYLAm",
+          "ypkT_6lOpyiEc9aKuJeuL"
+        ],
+        "ui": {
+          "x": 207,
+          "y": 104,
+          "zIndex": 2,
+          "widthName": 60,
+          "widthComment": 109,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1733423879868,
+          "createAt": 1732967032050
+        }
+      },
+      "rKrFb1OaESSgZrC3O6efl": {
+        "id": "rKrFb1OaESSgZrC3O6efl",
+        "name": "feats",
+        "comment": "collobarations on songs",
+        "columnIds": [
+          "sUx-Ejtawo0F41WlBVmGn",
+          "nju8gZ8E_TA6vjEtw034b",
+          "xMFENXHzM3aDf_4wwI1if"
+        ],
+        "seqColumnIds": [
+          "sUx-Ejtawo0F41WlBVmGn",
+          "nju8gZ8E_TA6vjEtw034b",
+          "1n3DjC5J2bWjCK6xLonYf",
+          "xMFENXHzM3aDf_4wwI1if"
+        ],
+        "ui": {
+          "x": 205.8557,
+          "y": 413,
+          "zIndex": 3,
+          "widthName": 60,
+          "widthComment": 136,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1733423927316,
+          "createAt": 1732998947530
+        }
+      }
+    },
+    "tableColumnEntities": {
+      "IA8xlUS-0ofQDBOU7VikQ": {
+        "id": "IA8xlUS-0ofQDBOU7VikQ",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "song_id",
+        "comment": "",
+        "dataType": "UUID",
+        "default": "",
+        "options": 2,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1732967259284,
+          "createAt": 1732967049942
+        }
+      },
+      "-4qSM8dkH30cp9n1GsW93": {
+        "id": "-4qSM8dkH30cp9n1GsW93",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "s3_object_name",
+        "comment": "actual name of s3 song object",
+        "dataType": "VARCHAR(64)",
+        "default": "",
+        "options": 4,
+        "ui": {
+          "keys": 0,
+          "widthName": 92,
+          "widthComment": 170,
+          "widthDataType": 76,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1733504661245,
+          "createAt": 1732967272684
+        }
+      },
+      "FdmFWFdPjK8xa8h5S2sk_": {
+        "id": "FdmFWFdPjK8xa8h5S2sk_",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "image_url",
+        "comment": "link to the song's image",
+        "dataType": "VARCHAR(64)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 136,
+          "widthDataType": 76,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1733504860623,
+          "createAt": 1732972893871
+        }
+      },
+      "3vmw01o4JQDN1sPl6Cncc": {
+        "id": "3vmw01o4JQDN1sPl6Cncc",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "duration",
+        "comment": "",
+        "dataType": "INTERVAL",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1732973106698,
+          "createAt": 1732972963640
+        }
+      },
+      "em7of1jO5Y7OeWlDXAx3V": {
+        "id": "em7of1jO5Y7OeWlDXAx3V",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "weight_bytes",
+        "comment": "",
+        "dataType": "INT",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 76,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1732973107468,
+          "createAt": 1732973030736
+        }
+      },
+      "CZ6MFcaqz1qtqzJNFPtu0": {
+        "id": "CZ6MFcaqz1qtqzJNFPtu0",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "name",
+        "comment": "UNIQUE(singer_fk, name)",
+        "dataType": "VARCHAR(64)",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 146,
+          "widthDataType": 76,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1732973489895,
+          "createAt": 1732973094001
+        }
+      },
+      "cbS3ngmdV_B9vnkREvBzr": {
+        "id": "cbS3ngmdV_B9vnkREvBzr",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "uploaded_at",
+        "comment": "",
+        "dataType": "TIMESTAMPTZ",
+        "default": "NOW()",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 72,
+          "widthComment": 60,
+          "widthDataType": 82,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1732973693040,
+          "createAt": 1732973209642
+        }
+      },
+      "yR0Gb0VJ7Nd4iQSJvYLAm": {
+        "id": "yR0Gb0VJ7Nd4iQSJvYLAm",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "genre",
+        "comment": "",
+        "dataType": "",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1732973259627,
+          "createAt": 1732973256790
+        }
+      },
+      "ijwRILgnLwO9A75bExceW": {
+        "id": "ijwRILgnLwO9A75bExceW",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "singer_fk",
+        "comment": "",
+        "dataType": "UUID",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1732973460839,
+          "createAt": 1732973281673
+        }
+      },
+      "sDDAZHCMoETZmtBfkCB-f": {
+        "id": "sDDAZHCMoETZmtBfkCB-f",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "released",
+        "comment": "as soon as song is released, notifications are sent",
+        "dataType": "BOOLEAN",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 280,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1733002271466,
+          "createAt": 1732973733279
+        }
+      },
+      "sUx-Ejtawo0F41WlBVmGn": {
+        "id": "sUx-Ejtawo0F41WlBVmGn",
+        "tableId": "rKrFb1OaESSgZrC3O6efl",
+        "name": "song_fk",
+        "comment": "REFERENCES songs(song_id)",
+        "dataType": "UUID",
+        "default": "",
+        "options": 10,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 161,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1733423656089,
+          "createAt": 1732998990021
+        }
+      },
+      "nju8gZ8E_TA6vjEtw034b": {
+        "id": "nju8gZ8E_TA6vjEtw034b",
+        "tableId": "rKrFb1OaESSgZrC3O6efl",
+        "name": "artist_fk",
+        "comment": "",
+        "dataType": "UUID",
+        "default": "",
+        "options": 10,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1733177613460,
+          "createAt": 1732999007785
+        }
+      },
+      "1n3DjC5J2bWjCK6xLonYf": {
+        "id": "1n3DjC5J2bWjCK6xLonYf",
+        "tableId": "rKrFb1OaESSgZrC3O6efl",
+        "name": "song_id",
+        "comment": "",
+        "dataType": "UUID",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1732999423155,
+          "createAt": 1732999423152
+        }
+      },
+      "ypkT_6lOpyiEc9aKuJeuL": {
+        "id": "ypkT_6lOpyiEc9aKuJeuL",
+        "tableId": "2_imBH7ajFnjRPGI7jWkg",
+        "name": "released_at",
+        "comment": "",
+        "dataType": "TIMESTAMPTZ",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 66,
+          "widthComment": 60,
+          "widthDataType": 82,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1733002377072,
+          "createAt": 1733002362275
+        }
+      },
+      "xMFENXHzM3aDf_4wwI1if": {
+        "id": "xMFENXHzM3aDf_4wwI1if",
+        "tableId": "rKrFb1OaESSgZrC3O6efl",
+        "name": "order_num",
+        "comment": "",
+        "dataType": "INT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 64,
+          "widthComment": 60,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1733423730839,
+          "createAt": 1733423621789
+        }
+      }
+    },
+    "relationshipEntities": {},
+    "indexEntities": {},
+    "indexColumnEntities": {},
+    "memoEntities": {
+      "2gIcn3AGlzGlzg70urJox": {
+        "id": "2gIcn3AGlzGlzg70urJox",
+        "value": "",
+        "ui": {
+          "x": 201,
+          "y": 202,
+          "zIndex": 49,
+          "width": 116,
+          "height": 100,
+          "color": ""
+        },
+        "meta": {
+          "updateAt": 1733423880272,
+          "createAt": 1733423829999
+        }
+      }
+    }
+  },
+  "lww": {
+    "2_imBH7ajFnjRPGI7jWkg": [
+      "tableEntities",
+      1732967032047,
+      -1,
+      {
+        "name": 1732967036556,
+        "comment": 1732967047997
+      }
+    ],
+    "IA8xlUS-0ofQDBOU7VikQ": [
+      "tableColumnEntities",
+      1732967049939,
+      -1,
+      {
+        "name": 1732967067962,
+        "dataType": 1732967231687,
+        "options(unique)": 1732967223432,
+        "options(notNull)": 1732967259283,
+        "options(primaryKey)": 1732967239015
+      }
+    ],
+    "settings.databaseName": [
+      "settings",
+      -1,
+      -1,
+      {
+        "databaseName": 1732967124471
+      }
+    ],
+    "-4qSM8dkH30cp9n1GsW93": [
+      "tableColumnEntities",
+      1732967272682,
+      -1,
+      {
+        "name": 1733504661243,
+        "dataType": 1732973187611,
+        "options(notNull)": 1733601804273,
+        "options(unique)": 1732973233689,
+        "comment": 1733423683655
+      }
+    ],
+    "FdmFWFdPjK8xa8h5S2sk_": [
+      "tableColumnEntities",
+      1732972893870,
+      -1,
+      {
+        "name": 1733504667078,
+        "dataType": 1732972958685,
+        "options(notNull)": 1732972961690,
+        "comment": 1733504860623
+      }
+    ],
+    "3vmw01o4JQDN1sPl6Cncc": [
+      "tableColumnEntities",
+      1732972963638,
+      -1,
+      {
+        "name": 1732973012802,
+        "dataType": 1732973022757,
+        "default": 1732973106697
+      }
+    ],
+    "em7of1jO5Y7OeWlDXAx3V": [
+      "tableColumnEntities",
+      1732973030734,
+      -1,
+      {
+        "name": 1732973063046,
+        "dataType": 1732973066191,
+        "default": 1732973107467
+      }
+    ],
+    "CZ6MFcaqz1qtqzJNFPtu0": [
+      "tableColumnEntities",
+      1732973093993,
+      -1,
+      {
+        "name": 1732973146120,
+        "dataType": 1732973151354,
+        "options(notNull)": 1732973153350,
+        "comment": 1732973489894
+      }
+    ],
+    "cbS3ngmdV_B9vnkREvBzr": [
+      "tableColumnEntities",
+      1732973209640,
+      -1,
+      {
+        "name": 1732973215573,
+        "dataType": 1732973223297,
+        "options(notNull)": 1732973226105,
+        "default": 1732973693039
+      }
+    ],
+    "yR0Gb0VJ7Nd4iQSJvYLAm": [
+      "tableColumnEntities",
+      1732973256788,
+      1732973273526,
+      {
+        "name": 1732973259626
+      }
+    ],
+    "ijwRILgnLwO9A75bExceW": [
+      "tableColumnEntities",
+      1732973281672,
+      -1,
+      {
+        "name": 1732973455371,
+        "dataType": 1732973448802,
+        "options(notNull)": 1732973460838
+      }
+    ],
+    "sDDAZHCMoETZmtBfkCB-f": [
+      "tableColumnEntities",
+      1733601821101,
+      1733601822210,
+      {
+        "name": 1733002271458,
+        "dataType": 1732973758336,
+        "default": 1732973812058,
+        "comment": 1732973805672,
+        "options(notNull)": 1732973814870
+      }
+    ],
+    "rKrFb1OaESSgZrC3O6efl": [
+      "tableEntities",
+      1732998947526,
+      -1,
+      {
+        "name": 1732998958807,
+        "comment": 1732998987036
+      }
+    ],
+    "sUx-Ejtawo0F41WlBVmGn": [
+      "tableColumnEntities",
+      1732998990020,
+      -1,
+      {
+        "name": 1732998994593,
+        "dataType": 1732998997734,
+        "options(notNull)": 1733177612909,
+        "options(primaryKey)": 1732999043056,
+        "comment": 1733423656088
+      }
+    ],
+    "nju8gZ8E_TA6vjEtw034b": [
+      "tableColumnEntities",
+      1732999007784,
+      -1,
+      {
+        "name": 1732999019544,
+        "dataType": 1732999025204,
+        "options(notNull)": 1733177613460,
+        "comment": 1732999034511,
+        "options(primaryKey)": 1732999044508
+      }
+    ],
+    "1n3DjC5J2bWjCK6xLonYf": [
+      "tableColumnEntities",
+      1732999423145,
+      1732999563446,
+      {
+        "options(notNull)": 1732999423145,
+        "name": 1732999423145,
+        "dataType": 1732999423145,
+        "default": 1732999423145,
+        "comment": 1732999423145
+      }
+    ],
+    "ypkT_6lOpyiEc9aKuJeuL": [
+      "tableColumnEntities",
+      1733002362271,
+      -1,
+      {
+        "name": 1733002367460,
+        "dataType": 1733002373877,
+        "options(notNull)": 1733002377071
+      }
+    ],
+    "xMFENXHzM3aDf_4wwI1if": [
+      "tableColumnEntities",
+      1733423621781,
+      -1,
+      {
+        "name": 1733423629996,
+        "dataType": 1733423634846,
+        "options(notNull)": 1733423637915,
+        "comment": 1733423730838
+      }
+    ],
+    "2gIcn3AGlzGlzg70urJox": [
+      "memoEntities",
+      1733423879868,
+      1733423879869,
+      {
+        "value": 1733423879869
+      }
+    ]
+  }
+}

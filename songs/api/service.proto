@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+option go_package = "github.com/Benzogang-Tape/audio-hosting/songs/api/protogen";
+
+package api;
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "api/types.proto";
+
+service SongsService {
+  // buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+  // buf:lint:ignore RPC_REQUEST_STANDARD_NAME
+  // buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+  // Health probe for kubernetes.
+  rpc Health(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get: "/songs/api/healthz"
+    };
+  }
+
+  // Uploads raw song data for a song.
+  //
+  // This RPC is not working yet, because there is no need
+  // for other services to load song data.
+  // For artists only.
+  rpc UploadRawSong(stream UploadRawSongRequest) returns (UploadRawSongResponse) {
+    // grpc gateway does not support streaming
+    // option (google.api.http) = {
+    //     post: "/songs/api/v1/song/{song_id}/raw"
+    //     body: "*"
+    // };
+  }
+
+  // Retrieves raw song data.
+  // It mostly will be used by an HTTP client to play the song.
+  //
+  // This RPC is not working yet, because there is no need
+  // to get song data from other services.
+  rpc GetRawSong(GetRawSongRequest) returns (stream GetRawSongResponse) {
+    // grpc gateway does not support streaming
+    // option (google.api.http) = {
+    //     get: "/songs/api/v1/song/raw/{raw_song_id}"
+    // };
+  }
+
+  // Uploads raw image data for a song.
+  //
+  // This RPC is not working yet, because there is no need
+  // for other services to load image data.
+  // For artists only.
+  rpc UploadRawSongImage(stream UploadRawSongImageRequest) returns (UploadRawSongImageResponse) {
+    // grpc gateway does not support streaming
+    // option (google.api.http) = {
+    // post: "/songs/api/v1/song/{song_id}/image/raw"
+    // body: "*"
+    // };
+  }
+
+  // Retrieves raw image data.
+  // It mostly will be used by an HTTP client to show song's cover.
+  //
+  // This RPC is not working yet, because there is no need
+  // to get image data from other services.
+  rpc GetRawSongImage(GetRawSongImageRequest) returns (stream GetRawSongImageResponse) {
+    // grpc gateway does not support streaming
+    // option (google.api.http) = {
+    //     get: "/songs/api/v1/song/image/raw/{raw_image_id}"
+    // };
+  }
+
+  // Creates a new song.
+  // Binary data should be uploaded separately using UploadRawSong and UploadRawSongImage.
+  // For artists only.
+  rpc CreateSong(CreateSongRequest) returns (CreateSongResponse) {
+    option (google.api.http) = {
+      post: "/songs/api/v1/song"
+      body: "*"
+    };
+  }
+
+  // Retrieves a song by ID.
+  rpc GetSong(GetSongRequest) returns (GetSongResponse) {
+    option (google.api.http) = {
+      get: "/songs/api/v1/song/{id}"
+    };
+  }
+
+  // Updates an existing song.
+  // For artists only.
+  rpc UpdateSong(UpdateSongRequest) returns (UpdateSongResponse) {
+    option (google.api.http) = {
+      put: "/songs/api/v1/song/{id}"
+      body: "*"
+    };
+  }
+
+  // Deletes songs with its image and binary data.
+  // For artists only.
+  rpc DeleteSongs(DeleteSongsRequest) returns (DeleteSongsResponse) {
+    option (google.api.http) = {
+      delete: "/songs/api/v1/songs"
+    };
+  }
+
+  // Retrieves released songs, optionally filtered and paginated.
+  rpc GetSongs(GetSongsRequest) returns (GetSongsResponse) {
+    option (google.api.http) = {
+      get: "/songs/api/v1/songs"
+    };
+  }
+
+  // Retrieves your uploaded songs.
+  // For artists only.
+  rpc GetMySongs(GetMySongsRequest) returns (GetMySongsResponse) {
+    option (google.api.http) = {
+      get: "/songs/api/v1/songs/my"
+    };
+  }
+
+  // Releases songs and notifies the followers if needed.
+  // Idempotent.
+  // For artists only.
+  rpc ReleaseSongs(ReleaseSongsRequest) returns (ReleaseSongsResponse) {
+    option (google.api.http) = {
+      post: "/songs/api/v1/songs/release"
+      body: "*"
+    };
+  }
+}

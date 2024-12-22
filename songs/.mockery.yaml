@@ -1,0 +1,10 @@
+with-expecter: True
+dir: "internal/mocks/{{.PackageName}}"
+keeptree: False
+mockname: "{{.InterfaceName}}"
+filename: "{{.InterfaceName}}.go"
+outpkg: "{{.PackageName}}mocks"
+all: true
+packages:
+  github.com/Benzogang-Tape/audio-hosting/songs/internal/services/songs:
+  github.com/Benzogang-Tape/audio-hosting/songs/internal/services/raw:

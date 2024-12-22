@@ -1,0 +1,125 @@
+version: "3.8"
+name: go-team2
+
+services:
+  web:
+    image: nginx:1.27.3-alpine3.20
+    volumes:
+      - ../../nginx/conf.d:/etc/nginx/conf.d:ro
+      - nginxlog:/var/log/nginx
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - songs
+      - users
+      - playlists
+
+  songs:
+    build:
+      context: ../../songs
+    restart: always
+    volumes:
+      - ../../configs:/etc/app:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+
+  users:
+    build:
+      context: ../../users
+    restart: always
+    volumes:
+      - ../../configs:/app/configs:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  playlists:
+    build:
+      context: ../../playlists
+    restart: always
+    volumes:
+      - ../../configs:/etc/app:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  postgres:
+    restart: always
+    image: postgres:17.2-alpine3.20
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: "users,songs,playlists"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: postgres
+      PGUSER: postgres
+      PGDATABASE: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../../scripts/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 3s
+      timeout: 20s
+      retries: 5
+
+  kafka:
+    image: docker.io/bitnami/kafka:3.9.0-debian-12-r3
+    volumes:
+      - kafka_data:/bitnami
+    env_file:
+      - ../../configs/kafka.env
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "echo 'test-message' | kafka-console-producer.sh --broker-list localhost:9092 --topic health-check-topic && kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic health-check-topic --from-beginning --max-messages 1 | grep 'test-message'",
+        ]
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 8
+
+  redis:
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    volumes:
+      - ../../configs/redis.conf:/usr/local/etc/redis/redis.conf
+    image: redis:7.2-alpine3.20
+    command: redis-server /usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 8
+
+  minio:
+    image: minio/minio:RELEASE.2024-11-07T00-52-20Z.fips
+    env_file: ../../configs/minio.env
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    ports:
+      - 9001:9001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+volumes:
+  nginxlog:
+  pgdata:
+  minio_data:
+  kafka_data:

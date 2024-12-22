@@ -1,0 +1,50 @@
+environment: prod
+servers:
+  common.tls:
+    certPath: /etc/app/tls.crt
+    keyPath: /etc/app/tls.key
+  common.host: localhost
+  grpc:
+    port: 5050
+    useTls: false
+    timeout: 5s
+  http:
+    port: 8080
+    useTls: false
+    timeout: 5s
+connections:
+  postgres:
+    host: postgres
+    port: 5432
+    user: songs_user
+    password: "12345678"
+    database: songs
+    sslmode: disable
+  redis:
+    host: redis
+    port: 6379
+    user: default
+    password: "12345678"
+    db: 0
+  s3:
+    endpoint: minio:9000
+    accessKey: <your_access_key>
+    secretKey: <your_secret_key>
+    useSsl: false
+    songsBucket: songs
+    imagesBucket: songs-images
+  kafka:
+    topic: released-songs
+    brokers:
+      - kafka:9092
+  usersService:
+    useFake: false
+    target: users:9090
+features:
+  auth:
+    publicKey: VBco3QN3RVq1ebse8SJaYhqV4fKPqQxjyT/LEmFs+U0=
+  cache:
+    songsTtl: 5m
+    mySongsTtl: 5m
+logging:
+  level: info

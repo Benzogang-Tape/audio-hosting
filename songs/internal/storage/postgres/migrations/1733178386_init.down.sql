@@ -1,0 +1,2 @@
+DROP TABLE feats;
+DROP TABLE songs;

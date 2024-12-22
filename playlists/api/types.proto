@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+option go_package = "github.com/Benzogang-Tape/audio-hosting/playlists/api/protogen;protogen";
+
+package playlists_api;
+
+import "api/google/protobuf/timestamp.proto";
+import "api/validate/validate.proto";
+import "api/clients/songs/types.proto";
+
+message PlaylistMetadata {
+  string id = 1;
+  string title = 2;
+  string author_id = 3;
+  string cover_url = 5;
+  google.protobuf.Timestamp created_at = 6;
+  optional google.protobuf.Timestamp updated_at = 7;
+  optional google.protobuf.Timestamp released_at = 8;
+
+  bool is_album = 9;
+  bool is_my_collection = 10;
+  bool is_public = 11;
+}
+
+message Playlist {
+  PlaylistMetadata metadata = 1;
+  repeated api.Song songs = 2;
+}
+
+message CreatePlaylistRequest {
+  string title = 1 [(validate.rules).string = {min_len: 1, max_len: 128}];
+  repeated string track_ids = 2 [(validate.rules).repeated = {items: {string: {uuid: true}}}];
+  string cover_url = 3;
+}
+
+message CreatePlaylistResponse { Playlist playlist = 1; }
+
+message GetPlaylistRequest {
+  string playlist_id = 1 [(validate.rules).string.uuid = true];
+}
+
+message GetPlaylistResponse { Playlist playlist = 1; }
+
+message UpdatePlaylistRequest {
+  string playlist_id = 1 [(validate.rules).string.uuid = true];
+  optional string title = 2 [(validate.rules).string = {min_len: 1, max_len: 128}];
+  optional string cover_url = 3;
+  optional bool is_public = 4;
+  repeated string track_ids = 5 [(validate.rules).repeated = {items: {string: {uuid: true}}}];
+}
+
+message UpdatePlaylistResponse { PlaylistMetadata playlist = 1; }
+
+message DeletePlaylistRequest {
+  repeated string playlist_id = 1 [(validate.rules).repeated = {items: {string: {uuid: true}}}];
+}
+
+message DeletePlaylistResponse {}
+
+message PaginationRequest {
+  int32 page = 1 [(validate.rules).int32 = {gte: 1}];
+  int32 limit = 2 [(validate.rules).int32 = {gte: 1, lte: 1000}];
+}
+
+message PaginationResponse {
+  int64 total = 1;
+  bool has_next = 2;
+  int64 last_page = 3;
+}
+
+message Filter {
+  // Filtering queries, mutually exclusive
+  optional string artist_id = 1 [(validate.rules).string = {ignore_empty: true, uuid: true }];
+  optional string match_title = 2 [(validate.rules).string = { ignore_empty: true, min_len: 1, max_len: 64 }];
+}
+
+message Sort {
+  string field = 1;
+  string order = 2;
+}
+
+message GetPlaylistsRequest {
+  PaginationRequest pagination = 1;
+  Filter filter = 2;
+  // Ids don't work with pagination
+  repeated string ids = 6 [(validate.rules).repeated = { ignore_empty: true, items: { string: { uuid: true } }, max_items: 2000 }];
+}
+
+message GetPlaylistsResponse {
+  repeated PlaylistMetadata playlists = 1;
+  PaginationResponse pagination = 2;
+}
+
+message CopyPlaylistRequest { string playlist_id = 1 [(validate.rules).string.uuid = true]; }
+
+message CopyPlaylistResponse { string playlist_id = 1; } // id of the new playlist
+
+message GetMyPlaylistsRequest {}
+
+message GetMyPlaylistsResponse { repeated PlaylistMetadata playlists = 1; }
+
+message GetMyCollectionRequest {}
+
+message GetMyCollectionResponse { Playlist playlist = 1; }
+
+message LikeDislikePlaylistRequest { string playlist_id = 1 [(validate.rules).string.uuid = true]; }
+
+message LikeDislikePlaylistResponse { bool success = 1; }
+
+message LikeDislikeTrackRequest { string track_id = 1 [(validate.rules).string.uuid = true]; }
+
+message LikeDislikeTrackResponse { bool success = 1; }
+
+message GetURLPlaylistCoverRequest { string playlist_id = 1 [(validate.rules).string.uuid = true]; }
+
+message GetURLPlaylistCoverResponse { string cover_url = 1; }
+
+enum ImageFileExtension {
+  JPEG = 0;
+  PNG = 1;
+  GIF = 2;
+}
+
+message GetRawPlaylistCoverRequest {
+  string raw_cover_id = 1;
+}
+
+message GetRawPlaylistCoverResponse {
+  bytes file_part = 1 [(validate.rules).bytes = {min_len: 1, max_len: 1048576}];
+}
+
+message UploadRawPlaylistCoverRequest {
+  string playlist_id = 1 [(validate.rules).string.uuid = true];
+  bytes file_part = 2 [(validate.rules).bytes = {min_len: 1, max_len: 1048576}]; // Max 1MB per part
+  ImageFileExtension extension = 3;
+}
+
+message UploadRawPlaylistCoverResponse {
+  string id = 1;
+  string url = 2;
+}
+
+message ReleaseAlbumRequest {
+  string album_id = 1 [(validate.rules).string.uuid = true];
+
+  // true - release album without notifications
+  // false - release album with notifications
+  bool suppress_notifications = 2;
+}
+
+message ReleaseAlbumResponse { bool success = 1; }

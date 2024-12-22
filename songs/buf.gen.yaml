@@ -1,0 +1,31 @@
+version: v2
+
+plugins:
+  - remote: buf.build/protocolbuffers/go:v1.35.2
+    out: api/protogen
+    opt:
+      - paths=source_relative
+
+  - remote: buf.build/grpc/go:v1.5.1
+    out: api/protogen
+    opt:
+      - paths=source_relative
+
+  - remote: buf.build/grpc-ecosystem/gateway:v2.24.0
+    out: api/protogen
+    opt:
+      - paths=source_relative
+  
+  - remote: buf.build/bufbuild/validate-go:v1.1.0
+    out: api/protogen
+    opt:
+      - paths=source_relative
+
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/Benzogang-Tape/audio-hosting/songs/api/protogen
+  disable:
+    - module: buf.build/googleapis/googleapis
+      file_option: go_package_prefix

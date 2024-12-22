@@ -1,0 +1,418 @@
+openapi: 3.1.0
+info:
+  title: ""
+  version: ""
+paths:
+  /playlists/api/v1/album:
+    post:
+      operationId: createAlbum
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePlaylistRequest'
+        required: true
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.CreateAlbum response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePlaylistResponse'
+  /playlists/api/v1/album/{albumId}/release:
+    post:
+      operationId: releaseAlbum
+      parameters:
+        - name: albumId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                suppressNotifications:
+                  type: boolean
+        required: true
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.ReleaseAlbum response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReleaseAlbumResponse'
+  /playlists/api/v1/playlist/{playlistId}:
+    get:
+      operationId: getPlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.GetPlaylist response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPlaylistResponse'
+    put:
+      operationId: updatePlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coverUrl:
+                  type: string
+                isPublic:
+                  type: boolean
+                title:
+                  type: string
+                trackIds:
+                  type: array
+                  items:
+                    type: string
+        required: true
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.UpdatePlaylist response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePlaylistResponse'
+    delete:
+      operationId: deletePlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.DeletePlaylist response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletePlaylistResponse'
+  /playlists/api/v1/playlist/{playlistId}/copy:
+    post:
+      operationId: copyPlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.CopyPlaylist response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CopyPlaylistResponse'
+  /playlists/api/v1/playlist/{playlistId}/dislike:
+    post:
+      operationId: dislikePlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.DislikePlaylist response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LikeDislikePlaylistResponse'
+  /playlists/api/v1/playlist/{playlistId}/like:
+    post:
+      operationId: likePlaylist
+      parameters:
+        - name: playlistId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.LikePlaylist response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LikeDislikePlaylistResponse'
+  /playlists/apy/v1/playlist:
+    post:
+      operationId: createPlaylist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePlaylistRequest'
+        required: true
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.CreatePlaylist response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePlaylistResponse'
+  /playlists/api/v1/playlists:
+    get:
+      operationId: getPlaylists
+      parameters:
+        - name: filter.artistId
+          in: query
+          schema:
+            type: string
+        - name: filter.matchTitle
+          in: query
+          schema:
+            type: string
+        - name: ids
+          in: query
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: pagination.limit
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pagination.page
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.GetPlaylists response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPlaylistsResponse'
+  /playlists/api/v1/playlists/my:
+    get:
+      operationId: getMyPlaylists
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.GetMyPlaylists response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMyPlaylistsResponse'
+  /playlists/api/v1/playlists/my/collection:
+    get:
+      operationId: getMyCollection
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.GetMyCollection response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMyCollectionResponse'
+  /playlists/api/v1/track/{trackId}/dislike:
+    post:
+      operationId: dislikeTrack
+      parameters:
+        - name: trackId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.DislikeTrack response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LikeDislikeTrackResponse'
+  /playlists/api/v1/track/{trackId}/like:
+    post:
+      operationId: likeTrack
+      parameters:
+        - name: trackId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: playlists_api.PlaylistsService.LikeTrack response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LikeDislikeTrackResponse'
+components:
+  schemas:
+    CopyPlaylistResponse:
+      type: object
+      properties:
+        playlistId:
+          type: string
+    CreatePlaylistRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        trackIds:
+          type: array
+          items:
+            type: string
+        coverUrl:
+          type: string
+    CreatePlaylistResponse:
+      type: object
+      properties:
+        playlist:
+          $ref: '#/components/schemas/Playlist'
+    DeletePlaylistResponse:
+      type: object
+    GetMyCollectionResponse:
+      type: object
+      properties:
+        playlist:
+          $ref: '#/components/schemas/Playlist'
+    GetMyPlaylistsResponse:
+      type: object
+      properties:
+        playlists:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaylistMetadata'
+    GetPlaylistResponse:
+      type: object
+      properties:
+        playlist:
+          $ref: '#/components/schemas/Playlist'
+    GetPlaylistsResponse:
+      type: object
+      properties:
+        playlists:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaylistMetadata'
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+    LikeDislikePlaylistResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    LikeDislikeTrackResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    PlaylistMetadata:
+      type: object
+      properties:
+        id:
+          type: uuid
+        title:
+          type: string
+        authorId:
+          type: string
+        coverUrl:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        releasedAt:
+          type: string
+          format: date-time
+        isAlbum:
+          type: boolean
+        isMyCollection:
+          type: boolean
+        isPublic:
+          type: boolean
+    Playlist:
+      type: object
+      properties:
+        metadata:
+          type: '#/components/schemas/PlaylistMetadata'
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+    ReleaseAlbumResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    UpdatePlaylistResponse:
+      type: object
+      properties:
+        playlist:
+          $ref: '#/components/schemas/PlaylistMetadata'
+    PaginationResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+        has_next:
+          type: boolean
+        last_page:
+          type: integer
+          format: int32
+    Song:
+      type: object
+      properties:
+        id:
+          type: string
+        singer:
+          $ref: '#/components/schemas/Artist'
+        artists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artist'
+        name:
+          type: string
+        songUrl:
+          type: string
+        imageUrl:
+          type: string
+        duration:
+          type: string
+          format: duration
+        weightBytes:
+          type: integer
+          format: int32
+        releasedAt:
+          type: string
+          format: date-time
+    Artist:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        label:
+          type: string
+        avatarUrl:
+          type: string

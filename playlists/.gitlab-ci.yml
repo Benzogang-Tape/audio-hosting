@@ -1,0 +1,54 @@
+stages:
+  - build
+  - lint
+  - test
+
+variables:
+  GOLANGCI_LINT_VERSION: 'v1.62.2'
+  CI_DEFAULT_BRANCH: 'main'
+
+
+build:
+  image: golang:1.23.3-alpine3.20
+  allow_failure: false
+  stage: build
+  script:
+    - echo "Building the application..."
+    - go build -o ./bin/run_app ./cmd/main/main.go
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+lint:
+  image: golangci/golangci-lint:$GOLANGCI_LINT_VERSION
+  allow_failure: false
+  stage: lint
+  script:
+    # Write the code coverage report to gl-code-quality-report.json
+    # and print linting issues to stdout in the format: path/to/file:line description
+    # remove `--issues-exit-code 0` or set to non-zero to fail the job if linting issues are detected
+    # - golangci-lint run --issues-exit-code 0 --print-issued-lines=false --out-format code-climate:gl-code-quality-report.json,line-number
+    - echo "Running go mod tidy to clean up module dependencies..."
+    - go mod tidy
+    - echo "Running golangci-lint..."
+    - golangci-lint run -v --timeout 3m --issues-exit-code 0 --print-issued-lines=false --out-format code-climate:gl-code-quality-report.json,line-number
+  artifacts:
+    reports:
+      codequality: ./gl-code-quality-report.json
+    paths:
+      - ./gl-code-quality-report.json
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+unit-test:
+  image: golang:1.23.4-bookworm
+  stage: test
+  allow_failure: false
+  script:
+    - whoami
+    - chmod +x ./scripts/totalcoverage.sh
+    - ./scripts/totalcoverage.sh
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

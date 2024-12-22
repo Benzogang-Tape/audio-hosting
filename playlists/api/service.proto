@@ -1,0 +1,126 @@
+syntax = "proto3";
+
+option go_package = "github.com/Benzogang-Tape/audio-hosting/playlists/api/protogen;protogen";
+
+package playlists_api;
+
+import "api/google/api/annotations.proto";
+import "api/types.proto";
+
+service PlaylistsService {
+  // Actions with playlists
+  rpc CreatePlaylist(CreatePlaylistRequest) returns (CreatePlaylistResponse) {
+    option (google.api.http) = {
+      post: "/playlists/api/v1/playlist"
+      body: "*"
+    };
+  }
+
+  rpc GetPlaylist(GetPlaylistRequest) returns (GetPlaylistResponse) {
+    option (google.api.http) = {
+      get: "/playlists/api/v1/playlist/{playlist_id}"
+    };
+  }
+
+  rpc UpdatePlaylist(UpdatePlaylistRequest) returns (UpdatePlaylistResponse) {
+    option (google.api.http) = {
+      put: "/playlists/api/v1/playlist/{playlist_id}"
+      body: "*"
+    };
+  }
+
+  rpc DeletePlaylist(DeletePlaylistRequest) returns (DeletePlaylistResponse) {
+    option (google.api.http) = {
+      delete: "/playlists/api/v1/playlist/{playlist_id}"
+    };
+  }
+
+  rpc GetPlaylists(GetPlaylistsRequest) returns (GetPlaylistsResponse) {
+    option (google.api.http) = {
+      get: "/playlists/api/v1/playlists"
+    };
+  }
+
+  // Actions with playlist's covers
+  rpc GetRawPlaylistCover(GetRawPlaylistCoverRequest) returns (stream GetRawPlaylistCoverResponse) {
+//    gateway does not support streaming
+
+//    option (google.api.http) = {
+//      get: "/playlists/api/v1/playlist/cover/{raw_cover_id}"
+//    };
+  }
+
+  rpc UploadRawPlaylistCover(stream UploadRawPlaylistCoverRequest) returns (UploadRawPlaylistCoverResponse) {
+//    gateway does not support streaming
+
+//    option (google.api.http) = {
+//      post: "/playlists/api/v1/playlist/cover"
+//      body: "*"
+//    };
+  }
+
+  // User's actions with playlists
+  rpc CopyPlaylist(CopyPlaylistRequest) returns (CopyPlaylistResponse) {
+    option (google.api.http) = {
+      post: "/playlists/api/v1/playlist/{playlist_id}/copy"
+      body: "*"
+    };
+  }
+
+  // Get playlists that user has liked or created
+  rpc GetMyPlaylists(GetMyPlaylistsRequest) returns (GetMyPlaylistsResponse) {
+    option (google.api.http) = {
+      get: "/playlists/api/v1/playlists/my"
+    };
+  }
+
+  // Get playlist of liked tracks
+  rpc GetMyCollection(GetMyCollectionRequest) returns (GetMyCollectionResponse) {
+    option (google.api.http) = {
+      get: "/playlists/api/v1/playlists/my/collection"
+    };
+  }
+
+  rpc LikePlaylist(LikeDislikePlaylistRequest) returns (LikeDislikePlaylistResponse) {
+    option (google.api.http) = {
+      post: "/playlists/api/v1/playlist/{playlist_id}/like"
+      body: "*"
+    };
+  }
+
+  rpc DislikePlaylist(LikeDislikePlaylistRequest) returns (LikeDislikePlaylistResponse) {
+    option (google.api.http) = {
+      post: "/playlists/api/v1/playlist/{playlist_id}/dislike"
+      body: "*"
+    };
+  }
+
+  rpc LikeTrack(LikeDislikeTrackRequest) returns (LikeDislikeTrackResponse) {
+    option (google.api.http) = {
+      post: "/playlists/api/v1/track/{track_id}/like"
+      body: "*"
+    };
+  }
+
+  rpc DislikeTrack(LikeDislikeTrackRequest) returns (LikeDislikeTrackResponse) {
+    option (google.api.http) = {
+      post: "/playlists/api/v1/track/{track_id}/dislike"
+      body: "*"
+    };
+  }
+
+  // Actions with albums
+  rpc CreateAlbum(CreatePlaylistRequest) returns (CreatePlaylistResponse) {
+    option (google.api.http) = {
+      post: "/playlists/api/v1/album"
+      body: "*"
+    };
+  }
+
+  rpc ReleaseAlbum(ReleaseAlbumRequest) returns (ReleaseAlbumResponse) {
+    option (google.api.http) = {
+      post: "/playlists/api/v1/album/{album_id}/release"
+      body: "*"
+    };
+  }
+}

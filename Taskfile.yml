@@ -1,0 +1,18 @@
+version: "3"
+
+tasks:
+  full-launch-build:
+    cmds:
+      - docker compose -f docker/prod/docker-compose.yml up --build -d
+
+  full-launch:
+    cmds:
+      - docker compose -f docker/prod/docker-compose.yml up -d
+
+  submodules:
+    cmds:
+      - git submodule update --init
+
+  default-config:
+    cmds:
+      - bash -c 'for i in $( ls ./configs/example.* ); do cp $i ./configs/${i#*example.}; done'

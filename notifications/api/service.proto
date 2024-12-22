@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option go_package = "github.com/Benzogang-Tape/audio-hosting/notifications/api/protogen;protogen";
+
+// import "api/product.proto";
+// import "api/google/date.proto";
+// import "google/protobuf/timestamp.proto";
+
+package notifications_api;
+
+service NotificationsService {
+}

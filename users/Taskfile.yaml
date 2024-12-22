@@ -1,0 +1,29 @@
+version: "3"
+
+tasks:
+  protoc:
+    desc: "generate go files from protos"
+    cmds:
+      - protoc
+        --go_out=./api/protogen
+        --go_opt=paths=source_relative
+        --go-grpc_out=./api/protogen
+        --go-grpc_opt=paths=source_relative
+        -I . --grpc-gateway_out ./api/protogen
+        --grpc-gateway_opt paths=source_relative
+        --experimental_allow_proto3_optional
+        ./api/*.proto
+
+      - mv ./api/protogen/api/* ./api/protogen
+      - rmdir ./api/protogen/api
+
+  goose-up:
+    desc: "run goose up"
+    dotenv: [".env"]
+    cmds:
+      - goose -dir ./migrations postgres "host=$POSTGRES_HOST user=$POSTGRES_USER password=$POSTGRES_PASSWORD dbname=$POSTGRES_DB port=$POSTGRES_PORT sslmode=$POSTGRES_SSL" up
+  goose-down:
+    desc: "run goose down"
+    dotenv: [".env"]
+    cmds:
+      - goose -dir ./migrations postgres "host=$POSTGRES_HOST user=$POSTGRES_USER password=$POSTGRES_PASSWORD dbname=$POSTGRES_DB port=$POSTGRES_PORT sslmode=$POSTGRES_SSL" down
